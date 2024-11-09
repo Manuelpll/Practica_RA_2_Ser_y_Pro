@@ -1,3 +1,12 @@
+/**
+ * Este programa lanza un hilo que genera 50 archivos csv
+ * que contienen cada uno 100000 lineas  de parejas
+ * formadas con un identificador del archivo identificadores.txt
+ * y un numero aleatorio entre 1 y el 20000
+ * @author Mparr
+ * @version 1.0
+ * @date 9/11/2024
+ */
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -12,11 +21,22 @@ public class GeneradorParesCSV2 extends Thread {
     private static final int lineas = 100000;
     private static final int numeroMaximo = 20000;
 
+    /**
+     * Metodo que inicializa la clase de GeneradorParesCSV2
+     * @param identificadores-La lista con todos los identificadores
+     * @param nombreArchivo-El nombre del archivo que se va ha crear
+     */
     public GeneradorParesCSV2(List<String> identificadores, String nombreArchivo) {
         this.identificadores = identificadores;
         this.nombreArchivo = nombreArchivo;
-    }
+    }//Fin del contructor
 
+    /**
+     * Metodo que inicia el hilo que genera 
+     * un csv de 100000 parejas formadas por
+     * un identificador del archivo identificadores.txt
+     * y un numero aleatorio entre 1 y el 20000
+     */
     @Override
     public void run() {
         Random random = new Random();
@@ -31,23 +51,30 @@ public class GeneradorParesCSV2 extends Thread {
         } catch (IOException e) {
             System.err.println("Error al escribir el archivo " + nombreArchivo + ": " + e.getMessage());
         }//Fin try-catch
-    }
+    }//Fin de run
 
+    /**
+     * Metodo que ejecuta el codigo
+     * @param args-Los argumentos de la linea de comandos
+     */
     public static void main(String[] args) {
+        generaIdentificadores();
         List<String> identificadores = leerIdentificadores("identificadores.txt");
         if (identificadores.isEmpty()) {
             System.err.println("No se encontraron identificadores en el archivo.");
             return;
         }//Fin if
-
         List<Thread> hilos = new ArrayList<>();
-        for (int i = 1; i <= 50; i++) {
-            String nombreArchivo = "archivo_" + i + ".csv";
-            GeneradorParesCSV2 generador = new GeneradorParesCSV2(identificadores, nombreArchivo);
-            generador.start();
-            hilos.add(generador);
-        }//Fin for
+        crearArchivosCSV(identificadores, hilos);
+        esperarFinalizacion(hilos);
+        System.out.println("Generación de archivos CSV completada.");
+    }//Fin main
 
+    /**
+     * Metodo que espera a que todos los hilos se terminen
+     * @param hilos-La lista donde estan todos los hilos
+     */
+    private static void esperarFinalizacion(List<Thread> hilos) {
         for (Thread hilo : hilos) {
             try {
                 hilo.join();
@@ -55,9 +82,29 @@ public class GeneradorParesCSV2 extends Thread {
                 System.err.println("Un hilo fue interrumpido: " + e.getMessage());
             }//Fin try-catch
         }//Fin for
-        System.out.println("Generación de archivos CSV completada.");
-    }
+    }//Fin de esperarFinalizacion
 
+    /**
+     * Metodo que crea 50 archivos csv que contienen 100000 pares formados por un identificador del archivo identificadores.txt
+     *  * y un numero aleatorio entre 1 y el 20000
+     * @param identificadores
+     * @param hilos
+     */
+    private static void crearArchivosCSV(List<String> identificadores, List<Thread> hilos) {
+        for (int i = 1; i <= 50; i++) {
+            String nombreArchivo = "archivo_" + i + ".csv";
+            GeneradorParesCSV2 generador = new GeneradorParesCSV2(identificadores, nombreArchivo);
+            generador.start();
+            hilos.add(generador);
+        }//Fin for
+    }//Fin de crearArchivosCSV
+
+    /**
+     * Metodo que lee el archivo identificadores.txt
+     * y lo transforma en un string
+     * @param archivo-El archivo donde estan los identificadores
+     * @return Un string con todos los identificadores
+     */
     private static List<String> leerIdentificadores(String archivo) {
         List<String> identificadores = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
@@ -69,5 +116,21 @@ public class GeneradorParesCSV2 extends Thread {
             System.err.println("Error al leer el archivo de identificadores: " + e.getMessage());
         }//Fin try-catch
         return identificadores;
-    }
-}
+    }//Fin de leerIdentificadores
+
+    /**
+     * Metodo que genera el archivo identificadores.txt
+     * con 200 identificadores unicos de 6 caracteres
+     */
+
+    private static void generaIdentificadores() {
+        GeneradorIdentificadores generador = new GeneradorIdentificadores();
+        generador.start();
+        try {
+            generador.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }//Fin try-catch
+    }//Fin de generarIdentificadores
+
+}//Fin de GeneradorParesCSV2

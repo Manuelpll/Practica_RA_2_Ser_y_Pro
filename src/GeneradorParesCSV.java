@@ -34,8 +34,8 @@ public class GeneradorParesCSV extends Thread {
     }
 
     public static void main(String[] args) {
+        generaIdentificadores();
         List<String> identificadores = leerIdentificadores("identificadores.txt");
-
         if (identificadores.isEmpty()) {
             System.err.println("No se encontraron identificadores en el archivo.");
             return;
@@ -73,4 +73,18 @@ public class GeneradorParesCSV extends Thread {
         }//Fin try-catch
         return identificadores;
     }
+    /**
+     * Metodo que genera el archivo identificadores.txt
+     * con 200 identificadores unicos de 6 caracteres
+     */
+    private static void generaIdentificadores() {
+        GeneradorIdentificadores generador = new GeneradorIdentificadores();
+        generador.start();
+        try {
+            generador.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }//Fin try-catch
+    }//Fin de generarIdentificadores
+
 }

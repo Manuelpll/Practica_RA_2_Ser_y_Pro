@@ -1,7 +1,7 @@
 /**
- * Este programa lanza un hilo que genera cada 10 segundos un numero aleatorio
- * y lo suma a un computo global hasta que el siguiente numero haga que el
- * siguiente numero haga que el computo global llegue a un millon que se detendra
+ * Este programa lanza 30 hilo que generan cada 10 segundos un numero aleatorio
+ * y lo suma a un computo global hasta que el siguiente numero que el computo
+ * global sea un millon
  * @author Mparr
  * @version 1.0
  * @date 6/11/2024

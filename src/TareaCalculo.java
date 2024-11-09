@@ -1,3 +1,10 @@
+/**
+ * Este clase al se ejecutada lanza un hilo que genera cada 10 segundos un numero aleatorio
+ * y lo suma a un computo global hasta que el computo global llegue a un millon
+ * @author Mparr
+ * @version 1.0
+ * @date 9/11/2024
+ */
 import java.util.Random;
 public class TareaCalculo extends Thread {
     //Variables globales
