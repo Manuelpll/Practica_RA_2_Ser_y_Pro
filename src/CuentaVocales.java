@@ -9,6 +9,9 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class CuentaVocales {
     private String texto;
@@ -22,13 +25,30 @@ public class CuentaVocales {
      */
 
     public CuentaVocales(String rutaArchivo) {
+        verificarExistenciaArchivo(rutaArchivo);
         this.texto = leerArchivo(rutaArchivo).toLowerCase();
     }//Fin de contructor
-
+    /**
+     * Metodo que verifica si el archivo existe y si no, lo crea
+     * con un texto predeterminado.
+     * @param rutaArchivo-La ruta donde se debe verificar o crear el archivo
+     */
+    private void verificarExistenciaArchivo(String rutaArchivo) {
+        Path ruta = Paths.get(rutaArchivo);
+        if (!Files.exists(ruta)) {
+            String textoPredeterminado = "Aqui es donde hay que poner el texto que quieres contarle las vocales.";
+            try {
+                Files.write(ruta, textoPredeterminado.getBytes());
+                System.out.println("Archivo creado en " + rutaArchivo+" Cambia el texto predeterminado al que quieras y vuelve a ejecutar el programa");
+            } catch (IOException e) {
+                System.out.println("Error al crear el archivo: " + e.getMessage());
+            }//Fin try-catch
+        }//Fin if
+    }//Fin de verificarOCrearArchivo
     /**
      * Metodo que suma todas las cuentas de vocales
      * de los 5 hilos que cuentan una vocal cada uno
-     * @param cantidad
+     * @param cantidad-La cantidad de vocles que ha contado el hilo
      */
 
     private synchronized void incrementarTotalVocales(int cantidad) {
@@ -69,7 +89,7 @@ public class CuentaVocales {
     /**
      * Meto que crea los diferentes hilos que cuentan las vocales
      * y luego muestra las vocales totales del archivo
-     * @throws InterruptedException
+     * @throws InterruptedException Si se interrumpe algun hilo
      */
 
     public void contarVocales() throws InterruptedException {
@@ -78,21 +98,43 @@ public class CuentaVocales {
         Thread hiloI = new Thread(new Contador('i'));
         Thread hiloO = new Thread(new Contador('o'));
         Thread hiloU = new Thread(new Contador('u'));
+        iniciarHilos(hiloA, hiloE, hiloI, hiloO, hiloU);
+        esperarHilos(hiloA, hiloE, hiloI, hiloO, hiloU);
+        System.out.println("Total de vocales: " + totalVocales);
+    }//Fin de contarVocales
 
-        hiloA.start();
-        hiloE.start();
-        hiloI.start();
-        hiloO.start();
-        hiloU.start();
-
+    /**
+     * Metodo que espera a que terminen los hilos
+     * @param hiloA-Hilo que cuenta la letra a
+     * @param hiloE-Hilo que cuenta la letra e
+     * @param hiloI-Hilo que cuenta la letra i
+     * @param hiloO-Hilo que cuenta la letra o
+     * @param hiloU-Hilo que cuenta la letra u
+     * @throws InterruptedException Si se interumpe un hilo
+     */
+    private static void esperarHilos(Thread hiloA, Thread hiloE, Thread hiloI, Thread hiloO, Thread hiloU) throws InterruptedException {
         hiloA.join();
         hiloE.join();
         hiloI.join();
         hiloO.join();
         hiloU.join();
+    }
 
-        System.out.println("Total de vocales: " + totalVocales);
-    }//Fin de contarVocales
+    /**
+     * Metodo que inicia los 5 hilos
+     * @param hiloA-Hilo que cuenta la letra a
+     * @param hiloE-Hilo que cuenta la letra e
+     * @param hiloI-Hilo que cuenta la letra i
+     * @param hiloO-Hilo que cuenta la letra o
+     * @param hiloU-Hilo que cuenta la letra u
+     */
+    private static void iniciarHilos(Thread hiloA, Thread hiloE, Thread hiloI, Thread hiloO, Thread hiloU) {
+        hiloA.start();
+        hiloE.start();
+        hiloI.start();
+        hiloO.start();
+        hiloU.start();
+    }
 
     /**
      * Metodo que lee el archivo y lo transforma en un string
@@ -120,7 +162,7 @@ public class CuentaVocales {
      */
 
     public static void main(String[] args) throws InterruptedException {
-        String rutaArchivo = "src\\texto.txt";
+        String rutaArchivo = "texto.txt";
         CuentaVocales contador = new CuentaVocales(rutaArchivo);
         contador.contarVocales();
     }//Fin main

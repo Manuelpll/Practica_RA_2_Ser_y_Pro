@@ -4,7 +4,7 @@
  * formadas con un identificador del archivo identificadores.txt
  * y un numero aleatorio entre 1 y el 20000
  * @author Mparr
- * @version 1.0
+ * @version 2.0
  * @date 9/11/2024
  */
 import java.io.BufferedReader;
@@ -85,19 +85,23 @@ public class GeneradorParesCSV2 extends Thread {
     }//Fin de esperarFinalizacion
 
     /**
-     * Metodo que crea 50 archivos csv que contienen 100000 pares formados por un identificador del archivo identificadores.txt
+     * Metodo que crea 100 archivos csv que contienen 100000 pares formados por un identificador del archivo identificadores.txt
      *  * y un numero aleatorio entre 1 y el 20000
-     * @param identificadores
-     * @param hilos
+     * @param identificadores-La lista con los identificadores
+     * @param hilos-La lista donde almacenan los hilos
      */
     private static void crearArchivosCSV(List<String> identificadores, List<Thread> hilos) {
         for (int i = 1; i <= 50; i++) {
-            String nombreArchivo = "archivo_" + i + ".csv";
-            GeneradorParesCSV2 generador = new GeneradorParesCSV2(identificadores, nombreArchivo);
-            generador.start();
-            hilos.add(generador);
-        }//Fin for
-    }//Fin de crearArchivosCSV
+            String nombreArchivo1 = "archivo_" + i + "_1.csv";
+            String nombreArchivo2 = "archivo_" + i + "_2.csv";
+            GeneradorParesCSV2 generador1 = new GeneradorParesCSV2(identificadores, nombreArchivo1);
+            generador1.start();
+            hilos.add(generador1);
+            GeneradorParesCSV2 generador2 = new GeneradorParesCSV2(identificadores, nombreArchivo2);
+            generador2.start();
+            hilos.add(generador2);
+        }
+    }
 
     /**
      * Metodo que lee el archivo identificadores.txt
