@@ -18,7 +18,7 @@ public class CuentaVocales {
     private int totalVocales = 0;
 
     /**
-     * Metodo que crea la clase donde esta el texto que luego
+     * Metodo construtor que crea la clase donde esta el texto que luego
      * leeran los 5 hilos de la clase contador
      * @param rutaArchivo-La ruta de donde esta el archivo
      * que quieres contar las palabras
@@ -65,8 +65,7 @@ public class CuentaVocales {
 
         public Contador(char vocal) {
             this.vocal = vocal;
-        }//Fin de Contador
-
+        }//Fin de constructor
         /**
          * Metodo que empieza a contar la vocal del archivo
          * que le toca y muestra las vocales que hay de

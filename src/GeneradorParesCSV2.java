@@ -1,5 +1,5 @@
 /**
- * Este programa lanza un hilo que genera 50 archivos csv
+ * Este programa lanza un 50 hilo que cada 1 genera 2 archivos csv
  * que contienen cada uno 100000 lineas  de parejas
  * formadas con un identificador del archivo identificadores.txt
  * y un numero aleatorio entre 1 y el 20000
