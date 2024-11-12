@@ -4,6 +4,7 @@
  * @version 1.0
  * @date 12/11/2024
  */public class Ejercicio_6 {
+
     /**
      * Metodo que ejecuta el codigo principal
      * @param args Los argumentos de la linea de comandos
@@ -26,4 +27,4 @@
         prioridad2.start();
         prioridad3.start();
     }//Fin de iniciarHilos
-}
+}//Fin de Ejercicio_6
