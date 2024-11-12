@@ -19,9 +19,10 @@ public class Colaborar {
     }//Fin main
 
     /**
-     *
-     * @param numeroHilos
-     * @param fichero
+     *Metodo que genera 10 hilos donde cada hilo escribe su numero
+     * de palabras dependiendo de su posicion en un fichero
+     * @param numeroHilos-La cantidad de hilos que se van a lanzar
+     * @param fichero-El fichero donde se va a escribir las palabras
      */
     private static void ejecutarHilos(int numeroHilos, String fichero) {
         for (int i = 1; i <= numeroHilos; i++) {
