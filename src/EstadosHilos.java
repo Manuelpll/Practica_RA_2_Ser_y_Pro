@@ -18,7 +18,6 @@ public class EstadosHilos {
          * Metodo que pone en marcha el hilo de la clase
          */
         public void run() {
-            System.out.println("Estado Actual del hilo : RUNNABLE");
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
@@ -41,8 +40,9 @@ public class EstadosHilos {
      */
     public static void main(String[] args) {
         Thread estados = new Thread(new Estados());
-        System.out.println("Estado actual del hilo : NEW");
+        System.out.println("Estado actual del hilo : "+estados.getState());
         estados.start();
+        System.out.println("Estado actual del hilo : "+estados.getState());
         try {
             Thread.sleep(1000);
             System.out.println("Estado actual del hilo: " + estados.getState());
