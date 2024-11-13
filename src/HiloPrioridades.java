@@ -8,8 +8,8 @@ public class HiloPrioridades extends Thread {
 
     /**
      * Metodo constructor que inicializa el nombre y la prioriadad del Hilo
-     * @param nombre-El  nombre del hilo
-     * @param prioridad-La prioridad  del hilo
+     * @param nombre-El nombre del hilo
+     * @param prioridad-La prioridad del hilo
      */
     public HiloPrioridades(String nombre, int prioridad) {
         setName(nombre);

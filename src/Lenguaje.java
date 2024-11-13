@@ -1,8 +1,7 @@
 /**
  * Este programa solicita al usuario un numero de palabras
- * que quiere que genere aleatoriamente , el nombre del archivo
- * y lanza un hilo que genera un directorio llamado Lenguaje
- * donde esta dentro un archivo txt que contiene
+ * que quiere que genere aleatoriamente, el nombre del archivo
+ * y lanza un hilo que genera un archivo txt con el nombre que contiene
  * el numero de palabras solicitadas
  * @author Mparr
  * @version 1.0
@@ -12,12 +11,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 public class Lenguaje implements Runnable {
     private final int numPalabras;
     private final String nombreFichero;
-    private static final String ruta = "Lenguaje\\";
+    private static final String ruta = "";
 
     /**
      * Metodo construcor de la clase Lenguaje
@@ -30,14 +30,13 @@ public class Lenguaje implements Runnable {
     }//Fin de constructor
 
     /**
-     * Metodo que  inicia el hilo que crea un archivo
-     * dentro del directorio Lenguaje donde estan
-     * las palabras aleatorias pedidas
+     * Metodo que inicia el hilo que crea un archivo
+     * dentro del directorio Lenguaje donde están
+     * las palabras aleatorias pedidas de 3 a 12 caracteres
      */
     @Override
     public void run() {
         Random random = new Random();
-        verificacionExistenciaDirectorio();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombreFichero, true))) {
             for (int i = 0; i < numPalabras; i++) {
                 StringBuilder palabra = new StringBuilder();
@@ -56,16 +55,6 @@ public class Lenguaje implements Runnable {
         }//Fin try catch
     }//Fin run
 
-    /**
-     * Metodo que verifica si esta el directorio
-     * Lenguaje y si no esta lo crea
-     */
-    private static void verificacionExistenciaDirectorio() {
-        File carpeta = new File(ruta);
-        if (!carpeta.exists()) {
-            carpeta.mkdirs();
-        }//Fin if
-    }//Fin de verificacionExistenciaDirectorio
 
     /**
      * Metodo que ejecuta el codigo principal
