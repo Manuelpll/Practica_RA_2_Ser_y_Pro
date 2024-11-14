@@ -3,7 +3,7 @@
  * @author Mparr
  * @version 1.0
  * @date 12/11/2024
- */public class Ejercicio_6 {
+ */public class Ejercicio_5 {
 
     /**
      * Metodo que ejecuta el codigo principal
